@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Edit Post — Photo Blog{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h2>Edit Post</h2>
+  <p>Update the details of your post.</p>
+</div>
+
+<div class="card">
+  <div class="card-body" style="padding:2rem">
+    <form method="post">
+      <div class="mb-4">
+        <label class="form-label">Title <span class="text-danger">*</span></label>
+        <input type="text" name="title" class="form-control form-control-lg"
+               value="{{ post.title }}" required maxlength="200"
+               style="font-family:var(--font-serif);font-size:1.15rem">
+      </div>
+      <div class="mb-4">
+        <label class="form-label">Description <span class="text-danger">*</span></label>
+        <textarea name="description" class="form-control" rows="8" required>{{ post.description }}</textarea>
+      </div>
+      <div class="mb-4">
+        <label class="form-label">
+          <i class="bi bi-geo-alt me-1"></i>Location
+          <span class="text-muted fw-normal">(optional)</span>
+        </label>
+        <input type="text" name="location" class="form-control"
+               value="{{ post.location }}" maxlength="200">
+      </div>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check2 me-1"></i>Save Changes
+        </button>
+        <a href="{{ url_for('posts.detail', post_id=post.id) }}" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

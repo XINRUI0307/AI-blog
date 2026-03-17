@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard — Photo Blog{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h2><i class="bi bi-shield-check me-2"></i>Admin Dashboard</h2>
+  <p>Manage users, content, and applications.</p>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card" style="background: linear-gradient(135deg,#2563eb,#1d4ed8)">
+      <div class="stat-icon"><i class="bi bi-people"></i></div>
+      <div class="stat-number">{{ user_count }}</div>
+      <div class="stat-label">Total Users</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card" style="background: linear-gradient(135deg,#0891b2,#0e7490)">
+      <div class="stat-icon"><i class="bi bi-file-image"></i></div>
+      <div class="stat-number">{{ post_count }}</div>
+      <div class="stat-label">Total Posts</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card" style="background: linear-gradient(135deg,#d97706,#b45309)">
+      <div class="stat-icon"><i class="bi bi-person-plus"></i></div>
+      <div class="stat-number">{{ pending_count }}</div>
+      <div class="stat-label">Pending Applications</div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="stat-card" style="background: linear-gradient(135deg,#dc2626,#b91c1c)">
+      <div class="stat-icon"><i class="bi bi-flag"></i></div>
+      <div class="stat-number">{{ reported_count }}</div>
+      <div class="stat-label">Reported Comments</div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick actions -->
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <a href="{{ url_for('admin.applications') }}"
+       class="card text-decoration-none h-100 {% if pending_count > 0 %}border-warning{% endif %}"
+       style="transition:var(--transition)">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div style="width:44px;height:44px;border-radius:10px;background:#fef9c3;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="bi bi-person-check" style="color:#a16207;font-size:1.2rem"></i>
+        </div>
+        <div>
+          <div class="fw-600" style="font-size:0.9rem">Membership Applications</div>
+          <div class="text-muted" style="font-size:0.8rem">
+            {% if pending_count > 0 %}{{ pending_count }} pending review{% else %}All reviewed{% endif %}
+          </div>
+        </div>
+        {% if pending_count > 0 %}
+        <span class="badge bg-warning text-dark ms-auto">{{ pending_count }}</span>
+        {% endif %}
+      </div>
+    </a>
+  </div>
+  <div class="col-md-4">
+    <a href="{{ url_for('admin.users') }}"
+       class="card text-decoration-none h-100" style="transition:var(--transition)">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div style="width:44px;height:44px;border-radius:10px;background:#dbeafe;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="bi bi-people" style="color:#1d4ed8;font-size:1.2rem"></i>
+        </div>
+        <div>
+          <div class="fw-600" style="font-size:0.9rem">Manage Users</div>
+          <div class="text-muted" style="font-size:0.8rem">Activate, deactivate, message</div>
+        </div>
+        <i class="bi bi-chevron-right ms-auto text-muted"></i>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-4">
+    <a href="{{ url_for('admin.reported_comments') }}"
+       class="card text-decoration-none h-100 {% if reported_count > 0 %}border-danger{% endif %}"
+       style="transition:var(--transition)">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div style="width:44px;height:44px;border-radius:10px;background:#fee2e2;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="bi bi-chat-left-text" style="color:#b91c1c;font-size:1.2rem"></i>
+        </div>
+        <div>
+          <div class="fw-600" style="font-size:0.9rem">Reported Comments</div>
+          <div class="text-muted" style="font-size:0.8rem">
+            {% if reported_count > 0 %}{{ reported_count }} to review{% else %}Nothing reported{% endif %}
+          </div>
+        </div>
+        {% if reported_count > 0 %}
+        <span class="badge bg-danger ms-auto">{{ reported_count }}</span>
+        {% endif %}
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- Sidebar management -->
+<div class="card">
+  <div class="card-header">
+    <i class="bi bi-layout-sidebar me-2"></i>Sidebar Content
+  </div>
+  <div class="card-body">
+    <form method="post" action="{{ url_for('admin.update_sidebar') }}">
+      <div class="mb-3">
+        <textarea name="content" class="form-control" rows="5"
+                  placeholder="Enter sidebar content (HTML supported)...">{{ sidebar.content if sidebar else '' }}</textarea>
+        <div class="form-text">Supports basic HTML. Displayed in the sidebar on all public pages.</div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">
+        <i class="bi bi-save me-1"></i>Update Sidebar
+      </button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

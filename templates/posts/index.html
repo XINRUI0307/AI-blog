@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Photo Blog — Home{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h2>Latest Posts</h2>
+  <p>Discover stories and photos from our contributors.</p>
+</div>
+
+{% if posts.items %}
+<div class="row g-4">
+  {% for post in posts.items %}
+  <div class="col-sm-6">
+    <div class="card post-card">
+      {% if post.images %}
+      <a href="{{ url_for('posts.detail', post_id=post.id) }}">
+        <img src="{{ url_for('photos.serve_post_photo', post_id=post.id, filename=post.images[0].filename) }}"
+             class="post-card-img" alt="{{ post.title }}">
+      </a>
+      {% else %}
+      <div class="post-card-img-placeholder">
+        <i class="bi bi-image" style="font-size:2rem; opacity:0.4"></i>
+      </div>
+      {% endif %}
+
+      <div class="card-body">
+        <a href="{{ url_for('posts.detail', post_id=post.id) }}" class="post-card-title d-block">
+          {{ post.title }}
+        </a>
+
+        <div class="post-meta mt-2">
+          <span>
+            <i class="bi bi-person me-1"></i>
+            <a href="{{ url_for('profile.view', username=post.author.username) }}"
+               style="color:inherit; font-weight:500">{{ post.author.username }}</a>
+          </span>
+          <span class="post-meta-dot">&middot;</span>
+          <span><i class="bi bi-calendar3 me-1"></i>{{ post.created_at.strftime('%d %b %Y') }}</span>
+          {% if post.location %}
+          <span class="post-meta-dot">&middot;</span>
+          <span><i class="bi bi-geo-alt me-1"></i>{{ post.location }}</span>
+          {% endif %}
+          {% if post.average_rating() %}
+          <span class="post-meta-dot">&middot;</span>
+          <span class="rating-display"><i class="bi bi-star-fill me-1"></i>{{ post.average_rating() }}</span>
+          {% endif %}
+          {% if post.images|length > 1 %}
+          <span class="post-meta-dot">&middot;</span>
+          <span><i class="bi bi-images me-1"></i>{{ post.images|length }}</span>
+          {% endif %}
+        </div>
+
+        <p class="post-excerpt">{{ post.description }}</p>
+
+        <div class="post-card-footer">
+          <a href="{{ url_for('posts.detail', post_id=post.id) }}"
+             class="btn btn-outline-primary btn-sm">
+            Read more <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+          {% if post.comments %}
+          <span class="text-muted small ms-3">
+            <i class="bi bi-chat me-1"></i>{{ post.comments|length }}
+          </span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Pagination -->
+{% if posts.has_prev or posts.has_next %}
+<nav class="mt-4">
+  <ul class="pagination justify-content-center">
+    {% if posts.has_prev %}
+    <li class="page-item">
+      <a class="page-link" href="{{ url_for('posts.index', page=posts.prev_num) }}">
+        <i class="bi bi-chevron-left"></i> Previous
+      </a>
+    </li>
+    {% endif %}
+    <li class="page-item disabled">
+      <span class="page-link">Page {{ posts.page }} of {{ posts.pages }}</span>
+    </li>
+    {% if posts.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="{{ url_for('posts.index', page=posts.next_num) }}">
+        Next <i class="bi bi-chevron-right"></i>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="text-center py-5">
+  <i class="bi bi-image" style="font-size:3rem; color:var(--text-light)"></i>
+  <p class="text-muted mt-3">No posts yet. Be the first to share something.</p>
+  {% if current_user.is_authenticated and current_user.role in ('contributor','admin') %}
+  <a href="{{ url_for('posts.create') }}" class="btn btn-primary mt-2">Create a Post</a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}Search — Photo Blog{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h2><i class="bi bi-search me-2"></i>Search Posts</h2>
+  <p>Find posts by title, location, or author.</p>
+</div>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="get" class="row g-2 align-items-end">
+      <div class="col-md-6">
+        <label class="form-label">Search term</label>
+        <input type="text" name="q" class="form-control"
+               placeholder="Enter keywords..." value="{{ q }}" autofocus>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Search by</label>
+        <select name="by" class="form-select">
+          <option value="title"    {% if by == 'title'    %}selected{% endif %}>Title</option>
+          <option value="location" {% if by == 'location' %}selected{% endif %}>Location</option>
+          <option value="author"   {% if by == 'author'   %}selected{% endif %}>Author</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100">
+          <i class="bi bi-search me-1"></i>Search
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if q %}
+<div class="mb-3">
+  <span class="text-muted small">
+    <strong>{{ posts|length }}</strong> result{{ 's' if posts|length != 1 }}
+    for "<strong>{{ q }}</strong>"
+    {% if by != 'title' %}(by {{ by }}){% endif %}
+  </span>
+</div>
+
+{% if posts %}
+<div class="row g-4">
+  {% for post in posts %}
+  <div class="col-sm-6">
+    <div class="card post-card h-100">
+      {% if post.images %}
+      <a href="{{ url_for('posts.detail', post_id=post.id) }}">
+        <img src="{{ url_for('photos.serve_post_photo', post_id=post.id, filename=post.images[0].filename) }}"
+             class="post-card-img" alt="{{ post.title }}">
+      </a>
+      {% else %}
+      <div class="post-card-img-placeholder">
+        <i class="bi bi-image" style="opacity:0.35;font-size:1.5rem"></i>
+      </div>
+      {% endif %}
+      <div class="card-body">
+        <a href="{{ url_for('posts.detail', post_id=post.id) }}" class="post-card-title d-block">
+          {{ post.title }}
+        </a>
+        <div class="post-meta mt-2">
+          <span>
+            <i class="bi bi-person me-1"></i>
+            <a href="{{ url_for('profile.view', username=post.author.username) }}"
+               style="color:inherit;font-weight:500">{{ post.author.username }}</a>
+          </span>
+          <span><i class="bi bi-calendar3 me-1"></i>{{ post.created_at.strftime('%d %b %Y') }}</span>
+          {% if post.location %}
+          <span><i class="bi bi-geo-alt me-1"></i>{{ post.location }}</span>
+          {% endif %}
+        </div>
+        <p class="post-excerpt">{{ post.description }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5">
+  <i class="bi bi-binoculars" style="font-size:3rem;color:var(--text-light)"></i>
+  <p class="text-muted mt-3">No posts found for "{{ q }}".</p>
+</div>
+{% endif %}
+{% endif %}
+
+{% endblock %}
