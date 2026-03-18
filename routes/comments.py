@@ -38,7 +38,7 @@ def delete(comment_id):
 @comments_bp.route('/comment/<int:comment_id>/report', methods=['POST'])
 @login_required
 def report(comment_id):
-    if current_user.role not in ('reader', 'contributor'):
+    if current_user.role not in ('reader', 'contributor', 'admin'):
         abort(403)
     comment = Comment.query.get_or_404(comment_id)
     comment.is_reported = True

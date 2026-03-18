@@ -12,6 +12,19 @@
     <a href="{{ url_for('profile.view', username=album.owner.username) }}">{{ album.owner.username }}</a>
     &middot; {{ album.posts|length }} post{{ 's' if album.posts|length != 1 }}
   </p>
+  {% if current_user.is_authenticated and (current_user.id == album.user_id or current_user.role == 'admin') %}
+  <div class="d-flex gap-2 mt-2">
+    <a href="{{ url_for('albums.edit', album_id=album.id) }}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-pencil me-1"></i>Edit Album
+    </a>
+    <form method="post" action="{{ url_for('albums.delete', album_id=album.id) }}"
+          onsubmit="return confirm('Delete this album? Posts will not be deleted.')">
+      <button type="submit" class="btn btn-outline-danger btn-sm">
+        <i class="bi bi-trash me-1"></i>Delete Album
+      </button>
+    </form>
+  </div>
+  {% endif %}
 </div>
 
 {% if album.posts %}

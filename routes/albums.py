@@ -39,6 +39,37 @@ def create():
     return render_template('albums/create.html')
 
 
+@albums_bp.route('/album/<int:album_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit(album_id):
+    album = Album.query.get_or_404(album_id)
+    if album.user_id != current_user.id and current_user.role != 'admin':
+        abort(403)
+    if request.method == 'POST':
+        name = request.form['name'].strip()
+        if not name:
+            flash('Album name is required.', 'danger')
+            return render_template('albums/edit.html', album=album)
+        album.name = name
+        album.description = request.form.get('description', '').strip()
+        db.session.commit()
+        flash('Album updated.', 'success')
+        return redirect(url_for('albums.detail', album_id=album.id))
+    return render_template('albums/edit.html', album=album)
+
+
+@albums_bp.route('/album/<int:album_id>/delete', methods=['POST'])
+@login_required
+def delete(album_id):
+    album = Album.query.get_or_404(album_id)
+    if album.user_id != current_user.id and current_user.role != 'admin':
+        abort(403)
+    db.session.delete(album)
+    db.session.commit()
+    flash('Album deleted.', 'success')
+    return redirect(url_for('albums.list_albums'))
+
+
 @albums_bp.route('/album/<int:album_id>/add/<int:post_id>', methods=['POST'])
 @login_required
 def add_post(album_id, post_id):

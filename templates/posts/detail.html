@@ -91,9 +91,9 @@
   </div>
 {% endif %}
 
-<!-- Photo gallery (remaining images) -->
-{% if post.images and (post.images|length > 1 or not full_view == false) %}
-{% set gallery_images = post.images[1:] if full_view else [] %}
+<!-- Photo gallery (remaining images — full members only) -->
+{% if full_view and post.images|length > 1 %}
+{% set gallery_images = post.images[1:] %}
 {% if gallery_images %}
 <div class="mt-4 mb-2">
   <div class="section-title"><i class="bi bi-images me-2"></i>Photos</div>
@@ -193,7 +193,7 @@
         </button>
       </form>
       {% endif %}
-      {% if current_user.is_authenticated and current_user.role in ('reader','contributor') and not comment.is_reported %}
+      {% if current_user.is_authenticated and current_user.role in ('reader','contributor','admin') and not comment.is_reported %}
       <form method="post" action="{{ url_for('comments.report', comment_id=comment.id) }}">
         <button type="submit" class="btn btn-sm"
                 style="border:1.5px solid #d97706;color:#d97706;background:transparent;font-size:0.8rem;padding:0.25rem 0.7rem;border-radius:6px">

@@ -18,18 +18,33 @@
 {% if albums.items %}
 <div class="row g-4">
   {% for album in albums.items %}
+  {% set cover = namespace(img=None) %}
+  {% for post in album.posts %}
+    {% if post.images and cover.img is none %}
+      {% set cover.img = post.images[0] %}
+      {% set cover.post_id = post.id %}
+    {% endif %}
+  {% endfor %}
   <div class="col-sm-6">
-    <div class="card">
+    <div class="card post-card">
+      {% if cover.img %}
+      <a href="{{ url_for('albums.detail', album_id=album.id) }}">
+        <img src="{{ url_for('photos.serve_post_photo', post_id=cover.post_id, filename=cover.img.filename) }}"
+             class="post-card-img" alt="{{ album.name }}">
+      </a>
+      {% else %}
+      <div class="post-card-img-placeholder">
+        <i class="bi bi-collection" style="font-size:2rem; opacity:0.4"></i>
+      </div>
+      {% endif %}
       <div class="card-body">
-        <h5 class="card-title">
-          <a href="{{ url_for('albums.detail', album_id=album.id) }}" style="color:inherit; text-decoration:none;">
-            <i class="bi bi-collection me-1"></i>{{ album.name }}
-          </a>
-        </h5>
+        <a href="{{ url_for('albums.detail', album_id=album.id) }}" class="post-card-title d-block">
+          <i class="bi bi-collection me-1"></i>{{ album.name }}
+        </a>
         {% if album.description %}
-        <p class="text-muted small mb-2">{{ album.description[:150] }}{% if album.description|length > 150 %}...{% endif %}</p>
+        <p class="post-excerpt">{{ album.description[:120] }}{% if album.description|length > 120 %}...{% endif %}</p>
         {% endif %}
-        <div class="post-meta">
+        <div class="post-meta mt-2">
           <span>
             <i class="bi bi-person me-1"></i>
             <a href="{{ url_for('profile.view', username=album.owner.username) }}"

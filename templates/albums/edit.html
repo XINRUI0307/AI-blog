@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Edit Album — Photo Blog{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h2><i class="bi bi-pencil me-2"></i>Edit Album</h2>
+  <p>Update your album's name and description.</p>
+</div>
+
+<div class="card">
+  <div class="card-body" style="padding:2rem">
+    <form method="post">
+      <div class="mb-4">
+        <label class="form-label">Name <span class="text-danger">*</span></label>
+        <input type="text" name="name" class="form-control form-control-lg"
+               value="{{ album.name }}" required maxlength="200"
+               style="font-family:var(--font-serif);font-size:1.15rem">
+      </div>
+      <div class="mb-4">
+        <label class="form-label">
+          Description
+          <span class="text-muted fw-normal">(optional)</span>
+        </label>
+        <textarea name="description" class="form-control" rows="4"
+                  placeholder="What is this album about?">{{ album.description }}</textarea>
+      </div>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-check2 me-1"></i>Save Changes
+        </button>
+        <a href="{{ url_for('albums.detail', album_id=album.id) }}" class="btn btn-outline-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

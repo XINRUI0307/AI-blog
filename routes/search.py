@@ -8,13 +8,15 @@ search_bp = Blueprint('search', __name__)
 def results():
     q = request.args.get('q', '').strip()
     by = request.args.get('by', 'title')
-    posts = []
+    page = request.args.get('page', 1, type=int)
+    pagination = None
     if q:
         if by == 'title':
-            posts = Post.query.filter(Post.title.ilike(f'%{q}%')).all()
+            pagination = Post.query.filter(Post.title.ilike(f'%{q}%')).order_by(Post.created_at.desc()).paginate(page=page, per_page=12)
         elif by == 'location':
-            posts = Post.query.filter(Post.location.ilike(f'%{q}%')).all()
+            pagination = Post.query.filter(Post.location.ilike(f'%{q}%')).order_by(Post.created_at.desc()).paginate(page=page, per_page=12)
         elif by == 'author':
             author_ids = [u.id for u in User.query.filter(User.username.ilike(f'%{q}%')).all()]
-            posts = Post.query.filter(Post.author_id.in_(author_ids)).all() if author_ids else []
-    return render_template('search/results.html', posts=posts, q=q, by=by)
+            if author_ids:
+                pagination = Post.query.filter(Post.author_id.in_(author_ids)).order_by(Post.created_at.desc()).paginate(page=page, per_page=12)
+    return render_template('search/results.html', pagination=pagination, q=q, by=by)
