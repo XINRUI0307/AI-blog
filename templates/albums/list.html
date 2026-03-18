@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Albums — Photo Blog{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h2><i class="bi bi-collection me-2"></i>Albums</h2>
+  <p>Browse curated photo collections.</p>
+</div>
+
+{% if current_user.is_authenticated %}
+<div class="mb-4">
+  <a href="{{ url_for('albums.create') }}" class="btn btn-primary btn-sm">
+    <i class="bi bi-plus-circle me-1"></i>Create Album
+  </a>
+</div>
+{% endif %}
+
+{% if albums.items %}
+<div class="row g-4">
+  {% for album in albums.items %}
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a href="{{ url_for('albums.detail', album_id=album.id) }}" style="color:inherit; text-decoration:none;">
+            <i class="bi bi-collection me-1"></i>{{ album.name }}
+          </a>
+        </h5>
+        {% if album.description %}
+        <p class="text-muted small mb-2">{{ album.description[:150] }}{% if album.description|length > 150 %}...{% endif %}</p>
+        {% endif %}
+        <div class="post-meta">
+          <span>
+            <i class="bi bi-person me-1"></i>
+            <a href="{{ url_for('profile.view', username=album.owner.username) }}"
+               style="color:inherit; font-weight:500">{{ album.owner.username }}</a>
+          </span>
+          <span class="post-meta-dot">&middot;</span>
+          <span><i class="bi bi-images me-1"></i>{{ album.posts|length }} post{{ 's' if album.posts|length != 1 }}</span>
+          <span class="post-meta-dot">&middot;</span>
+          <span><i class="bi bi-calendar3 me-1"></i>{{ album.created_at.strftime('%d %b %Y') }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if albums.has_prev or albums.has_next %}
+<nav class="mt-4">
+  <ul class="pagination justify-content-center">
+    {% if albums.has_prev %}
+    <li class="page-item">
+      <a class="page-link" href="{{ url_for('albums.list_albums', page=albums.prev_num) }}">
+        <i class="bi bi-chevron-left"></i> Previous
+      </a>
+    </li>
+    {% endif %}
+    <li class="page-item disabled">
+      <span class="page-link">Page {{ albums.page }} of {{ albums.pages }}</span>
+    </li>
+    {% if albums.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="{{ url_for('albums.list_albums', page=albums.next_num) }}">
+        Next <i class="bi bi-chevron-right"></i>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<p class="text-muted fst-italic">No albums yet. Be the first to create one!</p>
+{% endif %}
+
+{% endblock %}

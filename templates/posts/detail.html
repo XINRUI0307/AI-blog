@@ -38,6 +38,27 @@
 </div>
 {% endif %}
 
+<!-- Add to Album dropdown -->
+{% if current_user.is_authenticated and current_user.albums %}
+<div class="mb-3">
+  <div class="dropdown d-inline-block">
+    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-collection me-1"></i>Add to Album
+    </button>
+    <ul class="dropdown-menu">
+      {% for album in current_user.albums %}
+      <li>
+        <form method="post" action="{{ url_for('albums.add_post', album_id=album.id, post_id=post.id) }}">
+          <button type="submit" class="dropdown-item">{{ album.name }}</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}
+
 <!-- Owner actions -->
 {% if current_user.is_authenticated and (current_user.id == post.author_id or current_user.role == 'admin') %}
 <div class="d-flex flex-wrap gap-2 mb-4">
