@@ -16,10 +16,10 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 ### Discovery — Tags
 
-- [ ] **DISC-01**: Contributor can add tags to a post when creating or editing it
-- [ ] **DISC-02**: Tags are normalized (lowercase, trimmed, deduplicated) before saving
-- [ ] **DISC-03**: User can browse a tag page that lists all posts with that tag
-- [ ] **DISC-04**: Post detail view displays the post's tags, each linking to the tag browse page
+- [x] **DISC-01**: Contributor can add tags to a post when creating or editing it
+- [x] **DISC-02**: Tags are normalized (lowercase, trimmed, deduplicated) before saving
+- [x] **DISC-03**: User can browse a tag page that lists all posts with that tag
+- [x] **DISC-04**: Post detail view displays the post's tags, each linking to the tag browse page
 
 ### Discovery — Albums
 
@@ -92,10 +92,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INFRA-02 | Phase 1 | Complete |
 | INFRA-03 | Phase 1 | Complete |
 | INFRA-04 | Phase 1 | Complete |
-| DISC-01 | Phase 2 | Pending |
-| DISC-02 | Phase 2 | Pending |
-| DISC-03 | Phase 2 | Pending |
-| DISC-04 | Phase 2 | Pending |
+| DISC-01 | Phase 2 | Complete |
+| DISC-02 | Phase 2 | Complete |
+| DISC-03 | Phase 2 | Complete |
+| DISC-04 | Phase 2 | Complete |
 | DISC-05 | Phase 2 | Pending |
 | DISC-06 | Phase 2 | Pending |
 | DISC-07 | Phase 2 | Pending |
