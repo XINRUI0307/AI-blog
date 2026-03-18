@@ -1,19 +1,41 @@
 import os
+import warnings
 from datetime import datetime, timedelta
 from flask import Flask, render_template
-from extensions import db, login_manager
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
+from dotenv import load_dotenv
+from extensions import db, login_manager, migrate
+
+
+@event.listens_for(Engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA journal_mode=WAL")
+    cursor.close()
 
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'change-this-in-production')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-prod')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+        'SQLALCHEMY_DATABASE_URI', 'sqlite:///database.db'
+    )
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'uploads')
-    app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB
+    app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
+    app.config['ANTHROPIC_API_KEY'] = os.environ.get('ANTHROPIC_API_KEY', '')
+
+    if not app.config['ANTHROPIC_API_KEY']:
+        warnings.warn(
+            "ANTHROPIC_API_KEY is not set. AI features will not work.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
 
     db.init_app(app)
     login_manager.init_app(app)
+    migrate.init_app(app, db)
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -51,7 +73,6 @@ def create_app():
         return render_template('errors/404.html'), 404
 
     with app.app_context():
-        db.create_all()
         _seed_admin()
         _purge_old_posts()
 
@@ -77,5 +98,6 @@ def _purge_old_posts():
 
 
 if __name__ == '__main__':
+    load_dotenv()
     app = create_app()
-    app.run(debug=True)
+    app.run(debug=os.environ.get('FLASK_DEBUG', 'true').lower() == 'true')
