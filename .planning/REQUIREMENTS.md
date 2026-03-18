@@ -29,14 +29,6 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [ ] **DISC-08**: User can browse an album page that shows all posts in that album
 - [ ] **DISC-09**: User can view a list of all albums
 
-### Social — Follow & Feed
-
-- [ ] **SOCL-01**: Authenticated user can follow another contributor
-- [ ] **SOCL-02**: Authenticated user can unfollow a contributor they follow
-- [ ] **SOCL-03**: User can see a follower count and following count on a contributor's profile
-- [ ] **SOCL-04**: Authenticated user can view an activity feed showing posts from contributors they follow, in reverse chronological order
-- [ ] **SOCL-05**: Activity feed is paginated
-
 ### AI — Photo Analysis
 
 - [ ] **AI-01**: When a contributor uploads photos to a post, AI description generation is triggered in the background (non-blocking upload)
@@ -46,6 +38,14 @@ Requirements for this milestone. Each maps to a roadmap phase.
 - [ ] **AI-05**: AI tag suggestions are displayed to contributor for confirmation — they can select, edit, or dismiss individual suggestions before any tags are saved
 - [ ] **AI-06**: Contributor can click "Improve text" on their post description to request AI rewriting/enhancement
 - [ ] **AI-07**: AI writing assistant returns an improved version for contributor review — they can accept, edit, or discard it
+
+### Social — Follow & Feed
+
+- [ ] **SOCL-01**: Authenticated user can follow another contributor
+- [ ] **SOCL-02**: Authenticated user can unfollow a contributor they follow
+- [ ] **SOCL-03**: User can see a follower count and following count on a contributor's profile
+- [ ] **SOCL-04**: Authenticated user can view an activity feed showing posts from contributors they follow, in reverse chronological order
+- [ ] **SOCL-05**: Activity feed is paginated
 
 ## v2 Requirements
 
@@ -101,18 +101,18 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DISC-07 | Phase 2 | Pending |
 | DISC-08 | Phase 2 | Pending |
 | DISC-09 | Phase 2 | Pending |
-| SOCL-01 | Phase 3 | Pending |
-| SOCL-02 | Phase 3 | Pending |
-| SOCL-03 | Phase 3 | Pending |
-| SOCL-04 | Phase 3 | Pending |
-| SOCL-05 | Phase 3 | Pending |
-| AI-01 | Phase 4 | Pending |
-| AI-02 | Phase 4 | Pending |
-| AI-03 | Phase 4 | Pending |
-| AI-04 | Phase 4 | Pending |
-| AI-05 | Phase 4 | Pending |
-| AI-06 | Phase 4 | Pending |
-| AI-07 | Phase 4 | Pending |
+| AI-01 | Phase 3 | Pending |
+| AI-02 | Phase 3 | Pending |
+| AI-03 | Phase 3 | Pending |
+| AI-04 | Phase 3 | Pending |
+| AI-05 | Phase 3 | Pending |
+| AI-06 | Phase 3 | Pending |
+| AI-07 | Phase 3 | Pending |
+| SOCL-01 | Phase 4 | Pending |
+| SOCL-02 | Phase 4 | Pending |
+| SOCL-03 | Phase 4 | Pending |
+| SOCL-04 | Phase 4 | Pending |
+| SOCL-05 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 25 total
@@ -121,4 +121,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-03-18*
-*Last updated: 2026-03-18 after initial definition*
+*Last updated: 2026-03-18 — traceability updated after roadmap creation (AI=Phase 3, SOCL=Phase 4)*
