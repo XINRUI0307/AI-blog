@@ -28,10 +28,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The application starts and connects to the database with WAL mode enabled (concurrent reads and background writes do not deadlock)
   3. The Anthropic API key is read from a `.env` file — removing it from `.env` causes a clear startup warning, not a silent failure
   4. All configuration values (secret key, API keys, debug flag) are read from environment variables, not hardcoded
-**Plans**: TBD
+**Plans:** 1 plan
 
 Plans:
-(none yet — populated by plan-phase)
+- [ ] 01-01-PLAN.md — Environment config, WAL mode, and Flask-Migrate bootstrap
 
 ### Phase 2: Discovery
 **Goal**: Contributors can organize posts with tags and albums; readers can browse by tag or album
@@ -82,7 +82,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/1 | Planning complete | - |
 | 2. Discovery | 0/TBD | Not started | - |
 | 3. AI Features | 0/TBD | Not started | - |
 | 4. Social Graph | 0/TBD | Not started | - |
