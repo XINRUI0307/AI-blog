@@ -9,10 +9,10 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 ### Infrastructure
 
-- [ ] **INFRA-01**: Flask-Migrate is configured and an initial migration baseline exists so schema changes can be applied without data loss
-- [ ] **INFRA-02**: Database is configured with WAL mode to support concurrent reads and background thread writes
-- [ ] **INFRA-03**: Anthropic API key is loaded from environment variable (`.env` file, not hardcoded)
-- [ ] **INFRA-04**: Application reads configuration from environment variables via `python-dotenv`
+- [x] **INFRA-01**: Flask-Migrate is configured and an initial migration baseline exists so schema changes can be applied without data loss
+- [x] **INFRA-02**: Database is configured with WAL mode to support concurrent reads and background thread writes
+- [x] **INFRA-03**: Anthropic API key is loaded from environment variable (`.env` file, not hardcoded)
+- [x] **INFRA-04**: Application reads configuration from environment variables via `python-dotenv`
 
 ### Discovery — Tags
 
@@ -88,10 +88,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | Phase 1 | Pending |
-| INFRA-02 | Phase 1 | Pending |
-| INFRA-03 | Phase 1 | Pending |
-| INFRA-04 | Phase 1 | Pending |
+| INFRA-01 | Phase 1 | Complete |
+| INFRA-02 | Phase 1 | Complete |
+| INFRA-03 | Phase 1 | Complete |
+| INFRA-04 | Phase 1 | Complete |
 | DISC-01 | Phase 2 | Pending |
 | DISC-02 | Phase 2 | Pending |
 | DISC-03 | Phase 2 | Pending |

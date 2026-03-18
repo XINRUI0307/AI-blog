@@ -12,7 +12,7 @@ Starting from a functioning Flask photo blog, this milestone adds three layers o
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - DB migration infrastructure and environment configuration — prerequisite for all schema changes
+- [x] **Phase 1: Foundation** - DB migration infrastructure and environment configuration — prerequisite for all schema changes (completed 2026-03-18)
 - [ ] **Phase 2: Discovery** - Tags and albums so contributors can organize photos and readers can browse by topic
 - [ ] **Phase 3: AI Features** - Background AI photo analysis, description suggestions, tag suggestions, and writing assistant
 - [ ] **Phase 4: Social Graph** - Follow/unfollow, activity feed of posts from followed contributors
@@ -28,7 +28,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The application starts and connects to the database with WAL mode enabled (concurrent reads and background writes do not deadlock)
   3. The Anthropic API key is read from a `.env` file — removing it from `.env` causes a clear startup warning, not a silent failure
   4. All configuration values (secret key, API keys, debug flag) are read from environment variables, not hardcoded
-**Plans:** 1 plan
+**Plans:** 1/1 plans complete
 
 Plans:
 - [ ] 01-01-PLAN.md — Environment config, WAL mode, and Flask-Migrate bootstrap
@@ -82,7 +82,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/1 | Planning complete | - |
+| 1. Foundation | 1/1 | Complete   | 2026-03-18 |
 | 2. Discovery | 0/TBD | Not started | - |
 | 3. AI Features | 0/TBD | Not started | - |
 | 4. Social Graph | 0/TBD | Not started | - |
