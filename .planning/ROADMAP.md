@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans:** 1/1 plans complete
 
 Plans:
-- [ ] 01-01-PLAN.md — Environment config, WAL mode, and Flask-Migrate bootstrap
+- [x] 01-01-PLAN.md — Environment config, WAL mode, and Flask-Migrate bootstrap
 
 ### Phase 2: Discovery
 **Goal**: Contributors can organize posts with tags and albums; readers can browse by tag or album
@@ -42,10 +42,11 @@ Plans:
   2. Tags entered in mixed case or with extra whitespace are stored normalized (lowercase, trimmed) so "Golden Hour" and "golden hour" resolve to the same tag
   3. Any authenticated user can create an album, add posts to it, remove posts from it, and share the album URL with others who can view all posts in it
   4. A user can browse a list of all albums on the platform and open any album to see its posts
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-(none yet — populated by plan-phase)
+- [ ] 02-01-PLAN.md — Tag model, normalization, routes, and templates (DISC-01 through DISC-04)
+- [ ] 02-02-PLAN.md — Album model, CRUD routes, templates, and nav link (DISC-05 through DISC-09)
 
 ### Phase 3: AI Features
 **Goal**: Contributors receive AI-generated description drafts and tag suggestions after uploading photos, and can request AI improvement of their post text at any time
@@ -83,6 +84,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 1/1 | Complete    | 2026-03-18 |
-| 2. Discovery | 0/TBD | Not started | - |
+| 2. Discovery | 0/2 | Not started | - |
 | 3. AI Features | 0/TBD | Not started | - |
 | 4. Social Graph | 0/TBD | Not started | - |
