@@ -73,8 +73,11 @@ def create_app():
         return render_template('errors/404.html'), 404
 
     with app.app_context():
-        _seed_admin()
-        _purge_old_posts()
+        from sqlalchemy import inspect
+        inspector = inspect(db.engine)
+        if inspector.has_table('users'):
+            _seed_admin()
+            _purge_old_posts()
 
     return app
 
