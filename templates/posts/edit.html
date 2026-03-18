@@ -28,6 +28,16 @@
         <input type="text" name="location" class="form-control"
                value="{{ post.location }}" maxlength="200">
       </div>
+      <div class="mb-4">
+        <label class="form-label">
+          <i class="bi bi-tags me-1"></i>Tags
+          <span class="text-muted fw-normal">(optional, comma-separated)</span>
+        </label>
+        <input type="text" name="tags" class="form-control"
+               placeholder="e.g. landscape, golden-hour, film"
+               value="{{ post.tags | map(attribute='name') | join(', ') }}"
+               maxlength="500">
+      </div>
       <div class="d-flex gap-2">
         <button type="submit" class="btn btn-primary">
           <i class="bi bi-check2 me-1"></i>Save Changes

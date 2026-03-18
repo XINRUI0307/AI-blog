@@ -26,6 +26,18 @@
   <span><i class="bi bi-chat me-1"></i>{{ post.comments|length }} comment{{ 's' if post.comments|length != 1 }}</span>
 </div>
 
+{% if post.tags %}
+<div class="mb-3">
+  {% for tag in post.tags %}
+  <a href="{{ url_for('tags.browse', tag_name=tag.name) }}"
+     class="badge bg-secondary text-decoration-none me-1"
+     style="font-size:0.8rem; font-weight:500; padding:0.4em 0.7em;">
+    <i class="bi bi-tag me-1"></i>{{ tag.name }}
+  </a>
+  {% endfor %}
+</div>
+{% endif %}
+
 <!-- Owner actions -->
 {% if current_user.is_authenticated and (current_user.id == post.author_id or current_user.role == 'admin') %}
 <div class="d-flex flex-wrap gap-2 mb-4">
