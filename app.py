@@ -50,9 +50,10 @@ def create_app():
     from routes.profile import profile_bp
     from routes.search import search_bp
     from routes.admin import admin_bp
+    from routes.tags import tags_bp
 
     for bp in (auth_bp, posts_bp, photos_bp, comments_bp,
-               membership_bp, profile_bp, search_bp, admin_bp):
+               membership_bp, profile_bp, search_bp, admin_bp, tags_bp):
         app.register_blueprint(bp)
 
     os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], 'posts'), exist_ok=True)

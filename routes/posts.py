@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_required, current_user
 from extensions import db
 from models import Post, Rating
-from utils import contributor_required
+from utils import contributor_required, normalize_tags, get_or_create_tag
 
 posts_bp = Blueprint('posts', __name__)
 
@@ -42,6 +42,9 @@ def create():
         post = Post(title=title, description=description, location=location,
                     author_id=current_user.id)
         db.session.add(post)
+        raw_tags = request.form.get('tags', '')
+        if raw_tags:
+            post.tags = [get_or_create_tag(n) for n in normalize_tags(raw_tags)]
         db.session.commit()
         flash('Post created. You can now upload photos.', 'success')
         return redirect(url_for('photos.upload', post_id=post.id))
@@ -59,6 +62,8 @@ def edit(post_id):
         post.title = request.form['title'].strip()
         post.description = request.form['description'].strip()
         post.location = request.form.get('location', '').strip()
+        raw_tags = request.form.get('tags', '')
+        post.tags = [get_or_create_tag(n) for n in normalize_tags(raw_tags)]
         db.session.commit()
         flash('Post updated.', 'success')
         return redirect(url_for('posts.detail', post_id=post.id))

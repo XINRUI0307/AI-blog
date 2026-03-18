@@ -4,6 +4,23 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from extensions import db
 
 
+post_tags = db.Table(
+    'post_tags',
+    db.Column('post_id', db.Integer, db.ForeignKey('posts.id'), primary_key=True),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tags.id'), primary_key=True),
+)
+
+
+class Tag(db.Model):
+    __tablename__ = 'tags'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    posts = db.relationship('Post', secondary=post_tags, back_populates='tags')
+
+    def __repr__(self):
+        return f'<Tag {self.name}>'
+
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -50,6 +67,7 @@ class Post(db.Model):
     images = db.relationship('Image', backref='post', lazy=True, cascade='all, delete-orphan')
     comments = db.relationship('Comment', backref='post', lazy=True, cascade='all, delete-orphan')
     ratings = db.relationship('Rating', backref='post', lazy=True, cascade='all, delete-orphan')
+    tags = db.relationship('Tag', secondary=post_tags, back_populates='posts')
 
     def average_rating(self):
         if not self.ratings:
