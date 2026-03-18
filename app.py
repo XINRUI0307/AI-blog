@@ -61,10 +61,14 @@ def create_app():
     os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], 'avatars'), exist_ok=True)
 
     @app.context_processor
-    def inject_sidebar():
-        from models import SidebarContent
+    def inject_globals():
+        from models import SidebarContent, Tag
         sidebar = SidebarContent.query.first()
-        return dict(sidebar=sidebar)
+        popular_tags = sorted(
+            Tag.query.filter(Tag.posts.any()).all(),
+            key=lambda t: len(t.posts), reverse=True
+        )[:15]
+        return dict(sidebar=sidebar, popular_tags=popular_tags)
 
     @app.errorhandler(403)
     def forbidden(e):

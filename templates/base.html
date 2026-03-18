@@ -109,9 +109,10 @@
 <main class="site-main">
   <div class="container">
     <div class="row g-4">
-      <div class="col-lg-8">
+      <div class="{% block content_col %}col-lg-8{% endblock %}">
         {% block content %}{% endblock %}
       </div>
+      {% block sidebar_col %}
       <div class="col-lg-4">
         {% if sidebar and sidebar.content %}
         <div class="sidebar-widget">
@@ -119,8 +120,24 @@
           {{ sidebar.content | safe }}
         </div>
         {% endif %}
+        {% if popular_tags %}
+        <div class="sidebar-widget">
+          <div class="sidebar-widget-title">Popular Tags</div>
+          <div class="d-flex flex-wrap gap-2">
+            {% for tag in popular_tags %}
+            <a href="{{ url_for('tags.browse', tag_name=tag.name) }}"
+               class="badge bg-secondary text-decoration-none"
+               style="font-size:0.78rem;padding:0.4em 0.7em;font-weight:500">
+              <i class="bi bi-tag me-1"></i>{{ tag.name }}
+              <span class="opacity-75 ms-1">({{ tag.posts|length }})</span>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
         {% block sidebar_extra %}{% endblock %}
       </div>
+      {% endblock %}
     </div>
   </div>
 </main>
@@ -130,7 +147,7 @@
   <div class="container">
     <span style="font-family: var(--font-serif); font-size:1rem; color:rgba(255,255,255,0.65)">Photo Blog</span>
     <span class="mx-2" style="color:rgba(255,255,255,0.2)">|</span>
-    <span>An academic project comparing manual vs AI-assisted development</span>
+    <span>Share your stories and photos with the community</span>
   </div>
 </footer>
 

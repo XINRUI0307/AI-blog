@@ -89,4 +89,30 @@
 </div>
 {% endif %}
 
+{% if profile_user.albums %}
+<div class="section-title mt-4">
+  <i class="bi bi-collection me-2"></i>Albums by {{ profile_user.username }}
+</div>
+<div class="row g-3">
+  {% for album in profile_user.albums | sort(attribute='created_at', reverse=True) %}
+  <div class="col-sm-6">
+    <div class="card h-100">
+      <div class="card-body">
+        <a href="{{ url_for('albums.detail', album_id=album.id) }}"
+           class="post-card-title d-block mb-1">
+          <i class="bi bi-collection me-1"></i>{{ album.name }}
+        </a>
+        {% if album.description %}
+        <p class="text-muted small mb-1">{{ album.description[:100] }}{% if album.description|length > 100 %}...{% endif %}</p>
+        {% endif %}
+        <span class="text-muted small">
+          <i class="bi bi-images me-1"></i>{{ album.posts|length }} post{{ 's' if album.posts|length != 1 }}
+        </span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
 {% endblock %}

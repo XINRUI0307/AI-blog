@@ -2,6 +2,13 @@
 {% block title %}Tag: {{ tag.name }} — Photo Blog{% endblock %}
 {% block content %}
 
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb" style="font-size:0.85rem">
+    <li class="breadcrumb-item"><a href="{{ url_for('posts.index') }}">Home</a></li>
+    <li class="breadcrumb-item active">{{ tag.name }}</li>
+  </ol>
+</nav>
+
 <div class="page-header">
   <h2><i class="bi bi-tag me-2"></i>{{ tag.name }}</h2>
   <p>{{ posts|length }} post{{ 's' if posts|length != 1 }} tagged with "{{ tag.name }}"</p>
