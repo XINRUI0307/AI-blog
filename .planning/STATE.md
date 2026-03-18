@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 02-discovery-02-01-PLAN.md
-last_updated: "2026-03-18T15:51:44.810Z"
+stopped_at: Completed 02-discovery-02-02-PLAN.md
+last_updated: "2026-03-18T16:00:00.665Z"
 last_activity: 2026-03-18 — Roadmap created; all 25 v1 requirements mapped to 4 phases
 progress:
   total_phases: 4
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
   percent: 100
 ---
 
@@ -52,6 +52,7 @@ Progress: [██████████] 100%
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 4 | 2 tasks | 8 files |
 | Phase 02-discovery P01 | 15 | 2 tasks | 10 files |
+| Phase 02-discovery P02 | 3 | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -67,6 +68,8 @@ Recent decisions affecting current work:
 - [Phase 01-01]: Used flask db stamp head (not flask db upgrade) to mark existing database at head revision without re-running DDL
 - [Phase 02-01]: Tags normalized on write: 'Golden Hour' stored as 'golden-hour' via normalize_tags
 - [Phase 02-01]: get_or_create_tag uses deferred imports to avoid circular dependency between models.py and utils.py
+- [Phase 02-02]: album_posts secondary table has no added_at column — SQLAlchemy db.Table does not invoke Python-side defaults
+- [Phase 02-02]: Album create() uses @login_required only (not @contributor_required) so reader-role users can create albums
 
 ### Pending Todos
 
@@ -80,6 +83,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-18T15:51:44.807Z
-Stopped at: Completed 02-discovery-02-01-PLAN.md
+Last session: 2026-03-18T16:00:00.662Z
+Stopped at: Completed 02-discovery-02-02-PLAN.md
 Resume file: None

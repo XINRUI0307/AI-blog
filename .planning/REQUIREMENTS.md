@@ -23,11 +23,11 @@ Requirements for this milestone. Each maps to a roadmap phase.
 
 ### Discovery — Albums
 
-- [ ] **DISC-05**: Any authenticated user (reader or contributor) can create an album with a name and optional description
-- [ ] **DISC-06**: Album creator can add any post (from any contributor) to their album
-- [ ] **DISC-07**: Album creator can remove posts from their album
-- [ ] **DISC-08**: User can browse an album page that shows all posts in that album
-- [ ] **DISC-09**: User can view a list of all albums
+- [x] **DISC-05**: Any authenticated user (reader or contributor) can create an album with a name and optional description
+- [x] **DISC-06**: Album creator can add any post (from any contributor) to their album
+- [x] **DISC-07**: Album creator can remove posts from their album
+- [x] **DISC-08**: User can browse an album page that shows all posts in that album
+- [x] **DISC-09**: User can view a list of all albums
 
 ### AI — Photo Analysis
 
@@ -96,11 +96,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DISC-02 | Phase 2 | Complete |
 | DISC-03 | Phase 2 | Complete |
 | DISC-04 | Phase 2 | Complete |
-| DISC-05 | Phase 2 | Pending |
-| DISC-06 | Phase 2 | Pending |
-| DISC-07 | Phase 2 | Pending |
-| DISC-08 | Phase 2 | Pending |
-| DISC-09 | Phase 2 | Pending |
+| DISC-05 | Phase 2 | Complete |
+| DISC-06 | Phase 2 | Complete |
+| DISC-07 | Phase 2 | Complete |
+| DISC-08 | Phase 2 | Complete |
+| DISC-09 | Phase 2 | Complete |
 | AI-01 | Phase 3 | Pending |
 | AI-02 | Phase 3 | Pending |
 | AI-03 | Phase 3 | Pending |
