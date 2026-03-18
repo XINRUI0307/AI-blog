@@ -130,3 +130,25 @@ class SidebarContent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, default='')
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+album_posts = db.Table(
+    'album_posts',
+    db.Column('album_id', db.Integer, db.ForeignKey('albums.id'), primary_key=True),
+    db.Column('post_id', db.Integer, db.ForeignKey('posts.id'), primary_key=True),
+)
+
+
+class Album(db.Model):
+    __tablename__ = 'albums'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    name = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text, default='')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    owner = db.relationship('User', backref='albums')
+    posts = db.relationship('Post', secondary=album_posts, backref='albums')
+
+    def __repr__(self):
+        return f'<Album {self.name}>'
