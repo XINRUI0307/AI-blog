@@ -61,12 +61,12 @@
 
 <!-- Owner actions -->
 {% if current_user.is_authenticated and (current_user.id == post.author_id or current_user.role == 'admin') %}
-<div class="d-flex flex-wrap gap-2 mb-4">
+<div class="d-flex flex-wrap gap-2 mb-4 pb-3" style="border-bottom:1px solid var(--border-light)">
   <a href="{{ url_for('posts.edit', post_id=post.id) }}" class="btn btn-outline-secondary btn-sm">
     <i class="bi bi-pencil me-1"></i>Edit
   </a>
   <a href="{{ url_for('photos.upload', post_id=post.id) }}" class="btn btn-outline-secondary btn-sm">
-    <i class="bi bi-cloud-upload me-1"></i>Upload Photos
+    <i class="bi bi-cloud-upload me-1"></i>Add Photos
   </a>
   <form method="post" action="{{ url_for('posts.delete', post_id=post.id) }}" class="d-inline"
         onsubmit="return confirm('Delete this post?')">

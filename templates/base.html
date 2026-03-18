@@ -16,73 +16,80 @@
 <!-- ── Navbar ────────────────────────────────────────────── -->
 <nav class="navbar navbar-expand-lg">
   <div class="container">
-    <a class="navbar-brand" href="{{ url_for('posts.index') }}">
-      <i class="bi bi-camera2 me-1" style="opacity:0.7"></i> Photo Blog
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navMenu">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('posts.index') }}">
-            <i class="bi bi-house me-1"></i>Home
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('search.results') }}">
-            <i class="bi bi-search me-1"></i>Search
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('albums.list_albums') }}">
-            <i class="bi bi-collection me-1"></i>Albums
-          </a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
-        {% if current_user.is_authenticated %}
-          {% if current_user.role in ('contributor', 'admin') %}
+    <div class="navbar-inner w-100 d-flex align-items-center">
+      <a class="navbar-brand me-4" href="{{ url_for('posts.index') }}">
+        <i class="bi bi-camera2" style="opacity:0.6"></i> Photo Blog
+      </a>
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav me-auto gap-1">
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('posts.create') }}">
-              <i class="bi bi-plus-circle me-1"></i>New Post
-            </a>
+            <a class="nav-link {% if request.endpoint == 'posts.index' %}active{% endif %}"
+               href="{{ url_for('posts.index') }}">Home</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'albums.list_albums' %}active{% endif %}"
+               href="{{ url_for('albums.list_albums') }}">Albums</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.endpoint == 'search.results' %}active{% endif %}"
+               href="{{ url_for('search.results') }}">Search</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+          {% if current_user.is_authenticated %}
+            {% if current_user.role in ('contributor', 'admin') %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.endpoint == 'posts.create' %}active{% endif %}"
+                 href="{{ url_for('posts.create') }}">
+                <i class="bi bi-plus-circle me-1"></i>New Post
+              </a>
+            </li>
+            {% endif %}
+            {% if current_user.role == 'admin' %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.endpoint and request.endpoint.startswith('admin.') %}active{% endif %}"
+                 href="{{ url_for('admin.dashboard') }}">Admin</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.endpoint == 'profile.messages' %}active{% endif %}"
+                 href="{{ url_for('profile.messages') }}">
+                <i class="bi bi-envelope me-1"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.endpoint == 'profile.view' %}active{% endif %}"
+                 href="{{ url_for('profile.view', username=current_user.username) }}"
+                 style="display:flex;align-items:center;gap:0.4rem">
+                {% if current_user.avatar_filename %}
+                <img src="{{ url_for('photos.serve_avatar', filename=current_user.avatar_filename) }}"
+                     style="width:24px;height:24px;border-radius:50%;object-fit:cover;border:1.5px solid rgba(255,255,255,0.25)">
+                {% else %}
+                <span style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:600;color:#fff">
+                  {{ current_user.username[0].upper() }}
+                </span>
+                {% endif %}
+                {{ current_user.username }}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.logout') }}"
+                 style="color:rgba(255,255,255,0.4)!important;font-size:0.8rem">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ url_for('auth.register') }}"
+                 class="btn btn-primary btn-sm ms-lg-2">Register</a>
+            </li>
           {% endif %}
-          {% if current_user.role == 'admin' %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('admin.dashboard') }}">
-              <i class="bi bi-shield-check me-1"></i>Admin
-            </a>
-          </li>
-          {% endif %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('profile.messages') }}">
-              <i class="bi bi-envelope me-1"></i>Messages
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('profile.view', username=current_user.username) }}">
-              <i class="bi bi-person-circle me-1"></i>{{ current_user.username }}
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.logout') }}">
-              <i class="bi bi-box-arrow-right me-1"></i>Logout
-            </a>
-          </li>
-        {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('auth.register') }}"
-               class="btn btn-primary btn-sm ms-lg-2 px-3">
-              Register / Apply
-            </a>
-          </li>
-        {% endif %}
-      </ul>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
